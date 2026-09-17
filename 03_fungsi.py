@@ -68,11 +68,10 @@ usia(22)
 # Uji: cek_genap(4) -> True, cek_genap(7) -> False
 def cek_genap(angka):
     if angka % 2 == 0:
-        print("genap")
-    else:
-        print("ganjil")
+        return True
+    return False
 
-cek_genap(14)
+print(cek_genap(14))
 # --- SOAL 5 (mini challenge): konversi suhu ---
 # TODO: buat fungsi celsius_ke_fahrenheit(celsius) yang mengembalikan
 #   celsius * 9/5 + 32
@@ -83,5 +82,5 @@ cek_genap(14)
 def celcius_ke_fahrenheit(celcius):
     return celcius * 9/5 + 32
 
-print(celcius_ke_fahrenheit(32.0))
-print(celcius_ke_fahrenheit(212.0))
+print(celcius_ke_fahrenheit(0))
+print(celcius_ke_fahrenheit(100.0))
