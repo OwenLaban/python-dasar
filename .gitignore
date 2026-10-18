@@ -4,3 +4,7 @@
 # Python cache
 __pycache__/
 *.pyc
+
+# File hasil praktik latihan 06 (dibuat saat program dijalankan)
+latihan.txt
+catatan.txt
