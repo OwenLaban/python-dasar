@@ -34,8 +34,14 @@
 #   print(aman_int("25"))    -> 25
 #   print(aman_int("abc"))   -> None
 # Petunjuk: letakkan int(teks) di dalam try, dan return None di except.
-
-
+def aman_int(teks):
+    try:
+        return int(teks)
+    except ValueError:
+        return None
+print(aman_int("25"))    # -> 25
+print(aman_int("abc"))   # -> None
+ 
 # --- SOAL 2: pembagian aman ---
 # TODO: buat fungsi bagi_aman(a, b) yang:
 #   - mengembalikan a / b kalau berhasil
@@ -43,8 +49,13 @@
 # Uji:
 #   print(bagi_aman(10, 2))  -> 5.0
 #   print(bagi_aman(10, 0))  -> None
-
-
+def bagi_aman(a, b):
+    try:
+        return a / b
+    except ZeroDivisionError:
+        return None 
+print(bagi_aman(10, 2))  # -> 5.0
+print(bagi_aman(10, 0))  # -> None
 # --- SOAL 3: input user yang tahan banting ---
 # TODO: minta user mengetik angka dengan input(), lalu:
 #   - kalau BUKAN angka -> print "Itu bukan angka!"
@@ -52,7 +63,12 @@
 # Susun pakai try/except (bukan if .isdigit() ya).
 # Contoh: user ketik "21"  -> Hasil x2: 42
 #         user ketik "abc" -> Itu bukan angka!
-
+input_user = input("Masukkan angka: ")
+try:
+    angka = int(input_user)
+    print(f"Hasil x2: {angka * 2}")
+except ValueError:
+    print("Itu bukan angka!")   
 
 # --- SOAL 4: tangkap dua jenis error ---
 # TODO: buat fungsi rata_rata_key(data, key) yang mengembalikan
@@ -65,7 +81,14 @@
 #   print(rata_rata_key({}, "nilai"))             -> None
 # Petunjuk: boleh dua blok `except` terpisah, atau satu baris
 # except (KeyError, ZeroDivisionError).
-
+def rata_rata_key(data, key):
+    try:
+        return data[key] / len(data)
+    except (KeyError, ZeroDivisionError):
+        return None
+print(rata_rata_key({"nilai": 90}, "nilai"))  # -> 90.0
+print(rata_rata_key({"nilai": 90}, "ipk"))    # -> None
+print(rata_rata_key({}, "nilai"))             # -> None
 
 # --- SOAL 5 (mini challenge): validasi dengan raise ---
 # TODO: buat fungsi validasi_umur(umur) yang:
@@ -75,7 +98,16 @@
 #   print(validasi_umur(21))  -> 21
 #   panggil validasi_umur(-5) di dalam try/except ValueError as e,
 #   lalu print(f"Error: {e}") -> Error: Umur tidak boleh negatif
-
+def validasi_umur(umur):
+    if umur < 0:
+        raise ValueError("Umur tidak boleh negatif")
+    return umur
+print(validasi_umur(21))  # -> 21
+try:
+    validasi_umur(-5)
+except ValueError as e:
+    print(f"Error: {e}")  # -> Error: Umur tidak boleh negatif
+    
 
 # --- BONUS (baca saja): finally ---
 # try:

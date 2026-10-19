@@ -22,19 +22,27 @@
 #   from datetime import date  -> date.today() = tanggal hari ini
 # Praktik: letakkan semua `import` di bagian paling atas file.
 
-
+import math
+from datetime import date
 # --- SOAL 1: tulis file dari nol ---
 # TODO: dengan `with open("latihan.txt", "w") as f:`, tulis 3 nama
 # makanan favoritmu, satu per baris (jangan lupa \n di tiap baris).
 # Jalankan, lalu cek file `latihan.txt` muncul di folder ini.
 # Pertanyaan (jawab di catatanmu): kalau programnya dijalankan DUA kali,
 # isi file bertambah atau tertimpa? Kenapa?
+with open("latihan.txt", "w") as f:
+    f.write("Nasi Goreng\n")
+    f.write("Mie Ayam\n")
+    f.write("Sate Ayam\n")
 
 
 # --- SOAL 2: baca seluruh isi ---
 # TODO: buka "latihan.txt" dengan mode "r", pakai f.read(),
 # simpan ke variabel lalu print isinya.
 # Petunjuk: isi = f.read() dilakukan DI DALAM blok with.
+with open("latihan.txt", "r") as f:
+    isi = f.read()
+print(isi)  
 
 
 # --- SOAL 3: baca baris per baris + hitung ---
@@ -45,20 +53,33 @@
 #           ... (tambah jumlah; pakai baris.strip() untuk buang \n)
 #   print(f"Jumlah baris: {jumlah}")
 # Uji: kalau SOAL 1 menulis 3 baris -> "Jumlah baris: 3"
+jumlah = 0
+with open("latihan.txt", "r") as f:
+    for baris in f:
+        jumlah += 1
+print(f"Jumlah baris: {jumlah}")
 
 
 # --- SOAL 4: mode "a" (append) ---
 # TODO: buka file dengan mode "a", tambahkan 1 baris makanan baru,
 # lalu baca ulang seluruh isi dan print.
 # Buktikan: baris lama masih ada (beda dengan mode "w" di SOAL 1).
-
+with open("latihan.txt", "a") as f:
+    f.write("Bakso\n")
+with open("latihan.txt", "r") as f:
+    isi = f.read()
+print(isi)  
 
 # --- SOAL 5: tangkap file yang tidak ada ---
 # TODO: coba baca file "file_hilang.txt" yang memang tidak ada:
 #   - tangkap FileNotFoundError
 #   - print pesan ramah: "File catatan belum dibuat."
 # Petunjuk: pola try/except dari latihan 05, exception-nya FileNotFoundError.
-
+try:
+    with open("file_hilang.txt", "r") as f:
+        isi = f.read()
+except FileNotFoundError:
+    print("File catatan belum dibuat.")
 
 # --- SOAL 6: modul ---
 # TODO:
@@ -68,6 +89,8 @@
 #      print(date.today())              -> tanggal hari ini
 # Uji: sqrt(144) harus 12.0 — perhatikan bahwa kamu memakai kode
 # buatan orang lain tanpa menulisnya sendiri. Itu inti kegunaan modul.
+print(math.sqrt(144))  # -> 12.0
+print(date.today())    # -> tanggal hari ini    
 
 
 # --- SOAL 7 (mini challenge): catatan harian ---
@@ -77,3 +100,9 @@
 #   3. baca dan print seluruh isi "catatan.txt"
 # Jalankan 2-3 kali dengan kalimat berbeda; buktikan catatan lama
 # tidak hilang. Ini versi mini dari proyek akhir minggu (09)!
+input_user = input("Tulis catatan harianmu: ")
+with open("catatan.txt", "a") as f:
+    f.write(input_user + "\n")
+with open("catatan.txt", "r") as f:
+    isi = f.read()
+print(isi)
