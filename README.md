@@ -1,6 +1,6 @@
 # 🐍 python-dasar
 
-Latihan dasar Python — Minggu 1 dari perjalanan belajar AI Engineer 24 minggu ([roadmap.sh/ai-engineer](https://roadmap.sh/ai-engineer)).
+Latihan dasar Python + proyek CLI — Minggu 1–2 dari perjalanan belajar AI Engineer 24 minggu ([roadmap.sh/ai-engineer](https://roadmap.sh/ai-engineer)).
 
 ## Isi Latihan
 
@@ -9,7 +9,12 @@ Latihan dasar Python — Minggu 1 dari perjalanan belajar AI Engineer 24 minggu 
 | `01_variabel_typedata.py` | Variabel, tipe data (int/float/str/bool), f-string, konversi tipe, `input()` |
 | `02_list_dict_loop.py` | List, dict, `for` loop, `enumerate`, total & rata-rata, cari nilai tertinggi |
 | `03_fungsi.py` | Fungsi, parameter, `return`, default parameter, `if/else` |
-| `04_kalkulator_konversi.py` | **Proyek utama:** kalkulator interaktif + konverter suhu (C → F, C → K) |
+| `04_kalkulator_konversi.py` | **Proyek Minggu 1:** kalkulator interaktif + konverter suhu (C → F, C → K) |
+| `05_error_handling.py` | Error handling: `try/except`, `raise`, multiple exception |
+| `06_file_io_modul.py` | Baca/tulis file, `with`, modul (`math`, `datetime`) |
+| `07_oop.py` | OOP: class, `__init__`, method, inheritance, `__str__` |
+| `08_sintaks_modern.py` | f-string format, list comprehension, type hints |
+| `09_manajemen_tugas.py` | **Proyek Minggu 2:** CLI manajemen tugas + JSON persistence |
 
 ## Cara Menjalankan
 
@@ -17,9 +22,28 @@ Butuh Python 3.12+ (dikembangkan dengan Python 3.13.5).
 
 ```sh
 python 04_kalkulator_konversi.py
+python 09_manajemen_tugas.py
 ```
 
 Beberapa latihan meminta input secara interaktif, jadi jalankan langsung di terminal.
+
+## Proyek 09 — Manajemen Tugas
+
+Menu CLI untuk mengelola tugas sehari-hari. Data disimpan otomatis ke
+`tugas.json` (satu folder dengan script) sehingga tidak hilang saat program
+ditutup.
+
+```text
+===== MANAJEMEN TUGAS =====
+1. Lihat tugas
+2. Tambah tugas
+3. Tandai selesai
+4. Hapus tugas
+5. Keluar
+Pilih menu (1-5): 1
+1. [x] Belajar OOP
+2. [ ] Latihan file I/O
+```
 
 ## Contoh Output — Proyek Kalkulator
 
@@ -39,8 +63,11 @@ Hasil = 212.0
 
 ## Materi yang Sudah Dikuasai
 
-- Variabel & 4 tipe data dasar, f-string, konversi tipe (`int()`, `float()`)
-- List (indeks, `append`, `len`), dict (akses key, tambah key baru)
-- Loop: `for`, `enumerate`, akumulasi manual, pencarian nilai ekstrem
-- Fungsi: parameter, `return` vs `print`, default parameter, kondisi `if/else`
-- Struktur program: `while` loop + menu + `break`, penanganan pembagian nol (`None`)
+- **Dasar:** variabel & 4 tipe data, f-string, konversi tipe (`int()`, `float()`)
+- **Struktur data:** list (indeks, `append`, `len`), dict (akses key, tambah key baru)
+- **Loop:** `for`, `enumerate`, akumulasi manual, pencarian nilai ekstrem
+- **Fungsi:** parameter, `return` vs `print`, default parameter, `if/else`
+- **Error handling:** `try/except`, `raise`, `except ... as e`
+- **File I/O:** `open` mode `r`/`w`/`a`, `with`, modul `json`
+- **OOP:** class, `__init__`, attribute, method, inheritance, `__str__`
+- **Sintaks modern:** format spec f-string, list comprehension, type hints
