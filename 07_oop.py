@@ -43,8 +43,17 @@ print(f"{oyen.nama} bersuara: {oyen.suara()}")
 # mengembalikan: "Aku <nama>, umur <umur> tahun."
 # Lalu buat objeknya dengan namamu dan panggil perkenalan().
 # Uji: print(mhs.perkenalan())  -> Aku Wenn, umur 22 tahun.
+class Mahasiswa:
+    def __init__(self, nama, umur):
+        self.nama = nama
+        self.umur = umur
 
+    def ultah(self):
+        self.umur += 1
 
+    def perkenalan(self):
+        return f"Aku {self.nama}, umur {self.umur} tahun."
+print(Mahasiswa("Wenn", 22).perkenalan())
 # --- SOAL 2: class dengan perilaku ---
 # TODO: buat class RekeningBank dengan __init__(self, pemilik, saldo) dan:
 #   - setor(self, jumlah)  -> saldo bertambah
@@ -56,7 +65,24 @@ print(f"{oyen.nama} bersuara: {oyen.suara()}")
 #   print(rek.tarik(30000))   -> True
 #   print(rek.tarik(30000))   -> False   (saldo sekarang cuma 20000)
 #   print(rek.saldo)          -> 20000
+class RekeningBank:
+    def __init__(self, pemilik, saldo):
+        self.pemilik = pemilik
+        self.saldo = saldo
 
+    def setor(self, jumlah):
+        self.saldo += jumlah
+
+    def tarik(self, jumlah):
+        if jumlah > self.saldo:
+            return False
+        else:
+            self.saldo -= jumlah
+            return True
+rek = RekeningBank("Wenn", 50000)
+print(rek.tarik(30000))   # True
+print(rek.tarik(30000))   # False
+print(rek.saldo)          # 20000
 
 # --- SOAL 3: method yang mengubah attribute ---
 # TODO: tambah method ultah(self) ke class Mahasiswa dari SOAL 1:
@@ -65,7 +91,10 @@ print(f"{oyen.nama} bersuara: {oyen.suara()}")
 #   mhs.ultah()
 #   print(mhs.umur)   -> lihat bedanya
 # (Ya, kamu boleh mengedit class yang sudah kamu buat — itu normal!)
-
+mhs = Mahasiswa("Wenn", 22)
+print(mhs.umur)  # 22
+mhs.ultah()
+print(mhs.umur)  # 23
 
 # --- SOAL 4: inheritance (pewarisan) ---
 # Konsep: class anak mewarisi semua method induk, dan bisa meng-override.
@@ -89,6 +118,24 @@ print(f"{oyen.nama} bersuara: {oyen.suara()}")
 # Output: Oyen: Meong / Bruno: Guk
 # Catatan: Kucing dan Anjing TIDAK menulis __init__ sendiri —
 # mereka memakai __init__ milik Hewan. Itu inti dari pewarisan.
+class Hewan:
+    def __init__(self, nama):
+        self.nama = nama
+
+    def suara(self):
+        return "..."
+
+class Kucing(Hewan):
+    def suara(self):
+        return "Meong"
+
+class Anjing(Hewan):
+    def suara(self):
+        return "Guk"
+
+daftar = [Kucing("Oyen"), Anjing("Bruno")]
+for hewan in daftar:
+    print(f"{hewan.nama}: {hewan.suara()}")
 
 
 # --- SOAL 5 (mini challenge): bekal untuk proyek 09 ---
@@ -102,3 +149,17 @@ print(f"{oyen.nama} bersuara: {oyen.suara()}")
 #   tugas1.selesaikan()
 #   print(tugas1)             -> [x] Belajar OOP
 # Petunjuk: __str__ dipanggil otomatis saat objek di-print().
+class Tugas:
+    def __init__(self, teks):
+        self.teks = teks
+        self.selesai = False
+
+    def selesaikan(self):
+        self.selesai = True
+
+    def __str__(self):
+        status = "[x]" if self.selesai else "[ ]"
+        return f"{status} {self.teks}"
+tugas1 = Tugas("Belajar OOP")
+tugas1.selesaikan()
+print(tugas1)  # [x] Belajar OOP
