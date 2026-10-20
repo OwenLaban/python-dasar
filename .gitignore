@@ -5,6 +5,7 @@
 __pycache__/
 *.pyc
 
-# File hasil praktik latihan 06 (dibuat saat program dijalankan)
+# File hasil praktik (dibuat saat program dijalankan)
 latihan.txt
 catatan.txt
+tugas.json
