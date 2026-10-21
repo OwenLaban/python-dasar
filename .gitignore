@@ -9,3 +9,6 @@ __pycache__/
 latihan.txt
 catatan.txt
 tugas.json
+
+# Konfigurasi lokal (bisa berisi secret)
+.env

@@ -15,14 +15,29 @@ Latihan dasar Python + proyek CLI — Minggu 1–2 dari perjalanan belajar AI En
 | `07_oop.py` | OOP: class, `__init__`, method, inheritance, `__str__` |
 | `08_sintaks_modern.py` | f-string format, list comprehension, type hints |
 | `09_manajemen_tugas.py` | **Proyek Minggu 2:** CLI manajemen tugas + JSON persistence |
+| `10_http_json.py` | HTTP & JSON: method, status code, `json.loads`, `json.dumps` |
+| `11_api_requests.py` | Consume API dengan `requests` + environment variable dari `.env` |
 
 ## Cara Menjalankan
 
 Butuh Python 3.12+ (dikembangkan dengan Python 3.13.5).
 
+Latihan 01–09 hanya memakai standard library. Untuk latihan 10–11, install
+dependensi dulu:
+
+```sh
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+copy .env.example .env
+```
+
+Lalu jalankan:
+
 ```sh
 python 04_kalkulator_konversi.py
 python 09_manajemen_tugas.py
+python 11_api_requests.py
 ```
 
 Beberapa latihan meminta input secara interaktif, jadi jalankan langsung di terminal.
