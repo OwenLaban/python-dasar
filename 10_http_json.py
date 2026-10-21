@@ -49,21 +49,25 @@ print(json.dumps(data, indent=2))  # dict -> teks JSON rapi
 #   data_teks = '{"nama": "Wenn", "umur": 22, "kota": "Bandung"}'
 #   ubah ke dict dengan json.loads, lalu print nilai "nama"
 # Uji: Wenn
-
-
+data_teks = '{"nama": "Wenn", "umur": 22, "kota": "Bandung"}'
+data_dict = json.loads(data_teks)
+print(data_dict["nama"])  # Output: Wenn
 # --- SOAL 2: dict -> JSON string ---
 # TODO: buat dict mahasiswa = {"nama": ..., "umur": ..., "aktif": True}
 # lalu print json.dumps(mahasiswa, indent=2)
 # Perhatikan: True jadi true, dan hasilnya berupa string.
-
+mahasiswa = {"nama": "Wenn", "umur": 22, "aktif": True}
+json_string = json.dumps(mahasiswa, indent=2)
+print(json_string)
 
 # --- SOAL 3: JSON bersarang ---
 # TODO: dari JSON ini, ambil nama repo pertama dan jumlah starnya:
 respons = '{"items": [{"nama": "repo-a", "stars": 120}, {"nama": "repo-b", "stars": 45}]}'
 # Petunjuk: json.loads dulu -> ["items"] -> [0] -> ["nama"] / ["stars"]
 # Uji: "repo pertama: repo-a (120 stars)"
-
-
+respons_dict = json.loads(respons)
+repo_pertama = respons_dict["items"][0]
+print(f'repo pertama: {repo_pertama["nama"]} ({repo_pertama["stars"]} stars)')
 # --- SOAL 4: olah list of dict ---
 tugas = [
     {"teks": "Belajar HTTP", "selesai": True},
@@ -73,12 +77,18 @@ tugas = [
 # TODO: print teks tugas yang BELUM selesai saja
 # Uji: Latihan JSON / Baca status code
 # Bonus: hitung berapa tugas yang sudah selesai.
+tugas_belum_selesai = [t["teks"] for t in tugas if not t["selesai"]]
+print("Tugas yang belum selesai:")
+for teks in tugas_belum_selesai:
+    print(f" - {teks}")
 
+tugas_selesai = len(tugas) - len(tugas_belum_selesai)
+print(f"Jumlah tugas yang sudah selesai: {tugas_selesai}")
 
 # --- SOAL 5: status code (tanpa komputer) ---
 # Tebak status code yang paling tepat untuk situasi berikut:
-#   a) GET /users/tidak-ada-yang-ini   -> ???
-#   b) GET /profil tanpa token         -> ???
-#   c) GET berhasil                    -> ???
-#   d) server crash                    -> ???
+#   a) GET /users/tidak-ada-yang-ini   -> 404
+#   b) GET /profil tanpa token         -> 401
+#   c) GET berhasil                    -> 200
+#   d) server crash                    -> 500
 # Kunci: 404, 401, 200, 500 — cek setelah kamu menjawab sendiri.
