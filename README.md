@@ -86,3 +86,4 @@ Hasil = 212.0
 - **File I/O:** `open` mode `r`/`w`/`a`, `with`, modul `json`
 - **OOP:** class, `__init__`, attribute, method, inheritance, `__str__`
 - **Sintaks modern:** format spec f-string, list comprehension, type hints
+- **HTTP & API:** method, status code, headers/body, `requests`, JSON (`loads`/`dumps`), environment variable dari `.env`
