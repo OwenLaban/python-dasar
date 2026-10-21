@@ -17,6 +17,7 @@ Latihan dasar Python + proyek CLI — Minggu 1–2 dari perjalanan belajar AI En
 | `09_manajemen_tugas.py` | **Proyek Minggu 2:** CLI manajemen tugas + JSON persistence |
 | `10_http_json.py` | HTTP & JSON: method, status code, `json.loads`, `json.dumps` |
 | `11_api_requests.py` | Consume API dengan `requests` + environment variable dari `.env` |
+| `latihan_fastapi/` | **Minggu 5:** FastAPI (endpoint, Pydantic) + test dengan pytest |
 
 ## Cara Menjalankan
 
@@ -58,6 +59,21 @@ ditutup.
 Pilih menu (1-5): 1
 1. [x] Belajar OOP
 2. [ ] Latihan file I/O
+```
+
+## Latihan FastAPI (Minggu 5)
+
+Jalankan server dari folder `python-dasar`:
+
+```sh
+python -m uvicorn latihan_fastapi.main:app --reload
+```
+
+Buka <http://127.0.0.1:8000/docs> untuk mencoba endpoint langsung dari browser.
+Jalankan test:
+
+```sh
+pytest latihan_fastapi -v
 ```
 
 ## Contoh Output — Proyek Kalkulator

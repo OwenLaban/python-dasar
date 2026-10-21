@@ -4,6 +4,7 @@
 # Python cache
 __pycache__/
 *.pyc
+.pytest_cache/
 
 # File hasil praktik (dibuat saat program dijalankan)
 latihan.txt
