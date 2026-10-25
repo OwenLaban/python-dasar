@@ -41,6 +41,12 @@ def test_get_catatan_kosong():
 #   hasil = r.json()
 #   assert hasil["judul"] == "Test"
 #   assert "id" in hasil
+def test_post_catatan():
+    r = client.post("/catatan", json={"judul": "Test", "isi": "Isi test"})
+    assert r.status_code == 201
+    hasil = r.json()
+    assert hasil["judul"] == "Test"
+    assert "id" in hasil
 
 
 # --- SOAL 2: test GET /catatan/{id} ---
@@ -48,21 +54,47 @@ def test_get_catatan_kosong():
 #   - buat 1 catatan lewat POST, ambil id-nya
 #   - GET /catatan/{id}
 #   - assert 200 dan judulnya sama
+def test_get_catatan_by_id():
+    r = client.post("/catatan", json={"judul": "Test", "isi": "Isi test"})
+    assert r.status_code == 201
+    id_catatan = r.json()["id"]
+
+    r = client.get(f"/catatan/{id_catatan}")
+    assert r.status_code == 200
+    assert r.json()["judul"] == "Test"
 
 
 # --- SOAL 3: test 404 ---
 # TODO:
 #   - GET /catatan/999 -> assert 404
 #   - DELETE /catatan/999 -> assert 404
+def test_404():
+    r = client.get("/catatan/999")
+    assert r.status_code == 404
+
+    r = client.delete("/catatan/999")
+    assert r.status_code == 404
 
 
 # --- SOAL 4: test DELETE ---
 # TODO:
 #   - buat catatan, lalu DELETE -> assert 204
 #   - GET catatan yang sama -> assert 404
+def test_delete_catatan():
+    r = client.post("/catatan", json={"judul": "Test", "isi": "Isi test"})
+    assert r.status_code == 201
+    id_catatan = r.json()["id"]
 
+    r = client.delete(f"/catatan/{id_catatan}")
+    assert r.status_code == 204
+
+    r = client.get(f"/catatan/{id_catatan}")
+    assert r.status_code == 404
 
 # --- SOAL 5: test validasi Pydantic ---
 # TODO:
 #   - POST /catatan dengan json={"isi": "tanpa judul"}
 #   - assert 422 (judul wajib diisi)
+def test_validasi_pydantic():
+    r = client.post("/catatan", json={"isi": "tanpa judul"})
+    assert r.status_code == 422
