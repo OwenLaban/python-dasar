@@ -3,8 +3,6 @@
 # ============================================
 # Jalankan dari folder python-dasar (venv aktif):
 #   pytest latihan_llm -v
-#
-# Test ini akan gagal sampai 4 fungsi TODO kamu isi.
 # ============================================
 
 import latihan_llm.tokenizer_lab as lab
@@ -22,6 +20,11 @@ def test_hitung_token():
 def test_pecah_token():
     assert lab.pecah_token("kemerdekaan") == ["kem", "erde", "kaan"]
     assert len(lab.pecah_token("ketidaksempurnaan")) == 6
+
+
+def test_pecah_token_mengikuti_encoding():
+    assert len(lab.pecah_token("kemerdekaan", encoding="o200k_base")) == 3
+    assert len(lab.pecah_token("kemerdekaan", encoding="cl100k_base")) == 5
 
 
 def test_bandingkan():

@@ -3,8 +3,6 @@
 # ============================================
 # Jalankan dari folder python-dasar (venv aktif):
 #   python -m latihan_llm.tokenizer_lab
-#
-# Lengkapi 4 fungsi TODO di bawah.
 # ============================================
 
 import tiktoken
@@ -13,46 +11,41 @@ ENCODING = "o200k_base"
 
 
 def hitung_token(teks: str, encoding: str = ENCODING) -> int:
-    """Kembalikan jumlah token dari teks.
-
-    TODO:
-    1. Buat tokenizer: enc = tiktoken.get_encoding(encoding)
-    2. Encode teks: ids = enc.encode(teks)
-    3. Kembalikan panjang ids
-    """
-    raise NotImplementedError("TODO: lengkapi hitung_token")
+    """Kembalikan jumlah token dari teks."""
+    enc = tiktoken.get_encoding(encoding)
+    ids = enc.encode(teks)
+    return len(ids)
 
 
 def pecah_token(teks: str, encoding: str = ENCODING) -> list[str]:
-    """Kembalikan daftar potongan token sebagai string.
-
-    TODO:
-    1. Encode teks menjadi list id token.
-    2. Decode setiap id menjadi string: enc.decode([id])
-    3. Kembalikan list potongan tersebut.
-
-    Contoh bentuk hasil: ['kem', 'erde', 'kaan']
-    """
-    raise NotImplementedError("TODO: lengkapi pecah_token")
+    """Kembalikan daftar potongan token sebagai string."""
+    enc = tiktoken.get_encoding(encoding)
+    ids = enc.encode(teks)
+    return [enc.decode([id]) for id in ids]
 
 
 def bandingkan(teks_a: str, teks_b: str, encoding: str = ENCODING) -> dict:
-    """Bandingkan jumlah token dua teks.
-
-    TODO: kembalikan dict dengan bentuk:
-    {
-        "token_a": ...,
-        "token_b": ...,
-        "selisih": ...,       # selisih absolut
-        "lebih_boros": ...,   # "A", "B", atau "sama"
+    """Bandingkan jumlah token dua teks."""
+    token_a = hitung_token(teks_a, encoding)
+    token_b = hitung_token(teks_b, encoding)
+    selisih = abs(token_a - token_b)
+    if token_a > token_b:
+        lebih_boros = "A"
+    elif token_b > token_a:
+        lebih_boros = "B"
+    else:
+        lebih_boros = "sama"
+    return {
+        "token_a": token_a,
+        "token_b": token_b,
+        "selisih": selisih,
+        "lebih_boros": lebih_boros,
     }
-    """
-    raise NotImplementedError("TODO: lengkapi bandingkan")
 
 
 def muat_dalam_context(teks: str, batas_token: int, encoding: str = ENCODING) -> bool:
     """True kalau jumlah token teks <= batas_token."""
-    raise NotImplementedError("TODO: lengkapi muat_dalam_context")
+    return hitung_token(teks, encoding) <= batas_token
 
 
 def main() -> None:

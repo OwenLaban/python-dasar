@@ -3,6 +3,8 @@
 Tujuan: membuktikan sendiri bahwa **token ≠ kata** dan bahwa tokenizer memecah
 teks berdasarkan vocabulary model.
 
+Status: ✅ selesai — 5/5 test lulus.
+
 ## Prasyarat
 
 Dari folder `python-dasar`, dengan venv aktif:
@@ -43,7 +45,7 @@ python -m latihan_llm.tokenizer_lab
 pytest latihan_llm -v
 ```
 
-Target: **4 test lulus**.
+Target: **5 test lulus**.
 
 ## Setelah lulus
 
