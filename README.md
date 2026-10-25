@@ -1,6 +1,6 @@
 # 🐍 python-dasar
 
-Latihan dasar Python + proyek CLI — Minggu 1–2 dari perjalanan belajar AI Engineer 24 minggu ([roadmap.sh/ai-engineer](https://roadmap.sh/ai-engineer)).
+Latihan Python, FastAPI, dan dasar LLM — Minggu 1–7 dari perjalanan belajar AI Engineer 24 minggu ([roadmap.sh/ai-engineer](https://roadmap.sh/ai-engineer)).
 
 ## Isi Latihan
 
@@ -18,13 +18,14 @@ Latihan dasar Python + proyek CLI — Minggu 1–2 dari perjalanan belajar AI En
 | `10_http_json.py` | HTTP & JSON: method, status code, `json.loads`, `json.dumps` |
 | `11_api_requests.py` | Consume API dengan `requests` + environment variable dari `.env` |
 | `latihan_fastapi/` | **Minggu 5:** FastAPI (endpoint, Pydantic) + test dengan pytest |
+| `latihan_llm/` | **Minggu 7:** tokenizer, token vs kata, context window |
 
 ## Cara Menjalankan
 
 Butuh Python 3.12+ (dikembangkan dengan Python 3.13.5).
 
-Latihan 01–09 hanya memakai standard library. Untuk latihan 10–11, install
-dependensi dulu:
+Latihan 01–09 hanya memakai standard library. Untuk latihan 10–11 dan latihan LLM,
+install dependensi dulu:
 
 ```sh
 python -m venv .venv
@@ -75,6 +76,17 @@ Jalankan test:
 ```sh
 pytest latihan_fastapi -v
 ```
+
+## Latihan LLM (Minggu 7)
+
+Lab tokenizer untuk membuktikan bahwa **token ≠ kata** dan memahami context window.
+
+```sh
+python -m latihan_llm.tokenizer_lab
+pytest latihan_llm -v
+```
+
+Detail latihan ada di [`latihan_llm/README.md`](latihan_llm/README.md).
 
 ## Contoh Output — Proyek Kalkulator
 
