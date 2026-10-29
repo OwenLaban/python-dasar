@@ -3,6 +3,8 @@
 Tujuan: membandingkan **5 variasi prompt** untuk satu tugas yang sama, lalu menilai
 mana yang paling akurat, konsisten, dan aman.
 
+Status: ✅ selesai — 5 prompt diuji dan dievaluasi.
+
 ## Tugas
 
 Ubah email pelanggan menjadi **JSON tiket dukungan** dengan field:
@@ -64,7 +66,7 @@ latihan_prompt/
 | Halusinasi | Apakah model menambah fakta yang tidak ada? |
 | Robustness | Apakah tetap benar saat informasi ambigu/kurang? |
 
-## Setelah selesai
+## Hasil
 
-Bilang **“cek”**. Kita akan review prompt mana yang paling kuat, lalu jadikan
-baseline untuk proyek chatbot di Minggu 9.
+Lihat `prompt_lab.md` untuk 5 variasi prompt, output mentah, tabel evaluasi,
+uji edge case, dan refleksi.
