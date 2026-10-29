@@ -1,6 +1,6 @@
 # 🐍 python-dasar
 
-Latihan Python, FastAPI, dan dasar LLM — Minggu 1–7 dari perjalanan belajar AI Engineer 24 minggu ([roadmap.sh/ai-engineer](https://roadmap.sh/ai-engineer)).
+Latihan Python, FastAPI, dasar LLM, dan prompt engineering — Minggu 1–8 dari perjalanan belajar AI Engineer 24 minggu ([roadmap.sh/ai-engineer](https://roadmap.sh/ai-engineer)).
 
 ## Isi Latihan
 
@@ -19,6 +19,7 @@ Latihan Python, FastAPI, dan dasar LLM — Minggu 1–7 dari perjalanan belajar 
 | `11_api_requests.py` | Consume API dengan `requests` + environment variable dari `.env` |
 | `latihan_fastapi/` | **Minggu 5:** FastAPI (endpoint, Pydantic) + test dengan pytest |
 | `latihan_llm/` | **Minggu 7:** tokenizer, token vs kata, context window |
+| `latihan_prompt/` | **Minggu 8:** 5 variasi prompt + evaluasi untuk ekstraksi email → JSON |
 
 ## Cara Menjalankan
 
@@ -87,6 +88,14 @@ pytest latihan_llm -v
 ```
 
 Detail latihan ada di [`latihan_llm/README.md`](latihan_llm/README.md).
+
+## Latihan Prompt Engineering (Minggu 8)
+
+Membandingkan 5 variasi prompt — zero-shot, role + schema, few-shot, CoT, dan
+robust/edge case — untuk tugas ekstraksi email menjadi JSON tiket dukungan.
+
+- Panduan: [`latihan_prompt/README.md`](latihan_prompt/README.md)
+- Hasil dan evaluasi: [`latihan_prompt/prompt_lab.md`](latihan_prompt/prompt_lab.md)
 
 ## Contoh Output — Proyek Kalkulator
 
