@@ -1,6 +1,6 @@
 # 🐍 python-dasar
 
-Latihan Python, FastAPI, dasar LLM, dan prompt engineering — Minggu 1–8 dari perjalanan belajar AI Engineer 24 minggu ([roadmap.sh/ai-engineer](https://roadmap.sh/ai-engineer)).
+Latihan Python, FastAPI, dasar LLM, prompt engineering, dan pemilihan model — Minggu 1–10 dari perjalanan belajar AI Engineer 24 minggu ([roadmap.sh/ai-engineer](https://roadmap.sh/ai-engineer)).
 
 ## Isi Latihan
 
@@ -20,6 +20,7 @@ Latihan Python, FastAPI, dasar LLM, dan prompt engineering — Minggu 1–8 dari
 | `latihan_fastapi/` | **Minggu 5:** FastAPI (endpoint, Pydantic) + test dengan pytest |
 | `latihan_llm/` | **Minggu 7:** tokenizer, token vs kata, context window |
 | `latihan_prompt/` | **Minggu 8:** 5 variasi prompt + evaluasi untuk ekstraksi email → JSON |
+| `latihan_model/` | **Minggu 10:** explorer katalog OpenRouter + laporan pemilihan model |
 
 ## Cara Menjalankan
 
@@ -97,6 +98,20 @@ robust/edge case — untuk tugas ekstraksi email menjadi JSON tiket dukungan.
 - Panduan: [`latihan_prompt/README.md`](latihan_prompt/README.md)
 - Hasil dan evaluasi: [`latihan_prompt/prompt_lab.md`](latihan_prompt/prompt_lab.md)
 
+## Latihan Ekosistem Model (Minggu 10)
+
+Menjelajahi katalog publik OpenRouter tanpa API key, menyaring model berdasarkan
+harga, context window, dan dukungan structured output, lalu memilih model untuk
+tiga skenario: chatbot support, ringkasan kontrak hukum, dan catatan medis offline.
+
+```sh
+python -m latihan_model.model_explorer
+pytest latihan_model -v
+```
+
+- Panduan: [`latihan_model/README.md`](latihan_model/README.md)
+- Laporan: [`latihan_model/laporan_model.md`](latihan_model/laporan_model.md)
+
 ## Contoh Output — Proyek Kalkulator
 
 ```text
@@ -124,3 +139,5 @@ Hasil = 212.0
 - **OOP:** class, `__init__`, attribute, method, inheritance, `__str__`
 - **Sintaks modern:** format spec f-string, list comprehension, type hints
 - **HTTP & API:** method, status code, headers/body, `requests`, JSON (`loads`/`dumps`), environment variable dari `.env`
+- **LLM & prompt:** token ≠ kata, context window, temperature/top-p, prompt anatomy, few-shot/CoT, structured output
+- **Pemilihan model:** closed vs open-weight vs self-hosted, biaya per 1 juta token, context window vs throughput, tradeoff privasi dan operasional

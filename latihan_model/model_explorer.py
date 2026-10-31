@@ -13,14 +13,10 @@ MODELS_URL = "https://openrouter.ai/api/v1/models"
 
 
 def ambil_model(url: str = MODELS_URL) -> list[dict]:
-    """Ambil daftar model dari OpenRouter.
-
-    TODO:
-    1. response = requests.get(url, timeout=30)
-    2. response.raise_for_status()
-    3. return response.json()["data"]
-    """
-    raise NotImplementedError("TODO: implementasikan ambil_model()")
+    """Ambil daftar model dari OpenRouter."""
+    response = requests.get(url, timeout=30)
+    response.raise_for_status()
+    return response.json()["data"]
 
 
 def harga_per_juta(model: dict) -> tuple[float, float]:
@@ -28,13 +24,10 @@ def harga_per_juta(model: dict) -> tuple[float, float]:
 
     OpenRouter menyimpan harga per token sebagai string, misalnya "0.000003".
     Kalikan dengan 1_000_000 untuk mendapat harga per juta token.
-
-    TODO:
-    1. prompt = float(model["pricing"]["prompt"]) * 1_000_000
-    2. completion = float(model["pricing"]["completion"]) * 1_000_000
-    3. return prompt, completion
     """
-    raise NotImplementedError("TODO: implementasikan harga_per_juta()")
+    prompt = float(model["pricing"]["prompt"]) * 1_000_000
+    completion = float(model["pricing"]["completion"]) * 1_000_000
+    return prompt, completion
 
 
 def filter_model(
@@ -53,26 +46,42 @@ def filter_model(
     - jika butuh_json: "response_format" harus ada di supported_parameters
     - abaikan model dengan harga negatif (harganya variabel/tidak pasti)
 
-    TODO: loop models, hitung harga dengan harga_per_juta(), cek semua aturan,
-    lalu kumpulkan model yang lolos. Pertahankan urutan asli.
+    Urutan asli dipertahankan.
     """
-    raise NotImplementedError("TODO: implementasikan filter_model()")
+    hasil = []
+    for model in models:
+        prompt, completion = harga_per_juta(model)
+        context_length = model.get("context_length", 0)
+        supported_parameters = model.get("supported_parameters", [])
+
+        if prompt < 0 or completion < 0:
+            continue
+        if context_length < min_context:
+            continue
+        if prompt > maks_prompt_per_juta:
+            continue
+        if gratis_saja and (prompt != 0 or completion != 0):
+            continue
+        if butuh_json and "response_format" not in supported_parameters:
+            continue
+
+        hasil.append(model)
+
+    return hasil
 
 
 def urutkan_termurah(models: list[dict]) -> list[dict]:
     """Urutkan dari harga prompt termurah, lalu completion termurah.
 
-    TODO: gunakan sorted() dengan key (prompt, completion).
-    Jangan mengubah list asli.
+    Tidak mengubah list asli.
     """
-    raise NotImplementedError("TODO: implementasikan urutkan_termurah()")
+    return sorted(models, key=lambda m: harga_per_juta(m))
 
 
 def ringkas_model(model: dict) -> dict:
-    """Buat ringkasan satu model untuk ditampilkan.
-
-    TODO: kembalikan dict dengan bentuk:
-    {
+    """Buat ringkasan satu model untuk ditampilkan."""
+    prompt, completion = harga_per_juta(model)
+    return {
         "id": model["id"],
         "nama": model["name"],
         "context": model["context_length"],
@@ -81,8 +90,6 @@ def ringkas_model(model: dict) -> dict:
         "modalitas": model.get("architecture", {}).get("input_modalities", []),
         "dukung_json": "response_format" in model.get("supported_parameters", []),
     }
-    """
-    raise NotImplementedError("TODO: implementasikan ringkas_model()")
 
 
 def main() -> None:

@@ -1,5 +1,8 @@
 # Lab Minggu 10 — Ekosistem Model
 
+**Status: ✅ Selesai** — 5 fungsi diimplementasikan, **7/7 test lulus**, dan
+laporan pemilihan model untuk tiga skenario sudah terisi.
+
 Tujuan: belajar **memilih model berdasarkan kebutuhan**, bukan berdasarkan
 model yang paling ramai dibicarakan.
 
@@ -11,11 +14,11 @@ dan dukungan structured output, lalu menulis rekomendasi untuk tiga skenario.
 
 ```text
 latihan_model/
-├── README.md            # instruksi ini
+├── README.md            # instruksi dan hasil
 ├── studi_kasus.md       # 3 skenario nyata
-├── model_explorer.py    # 5 fungsi TODO
+├── model_explorer.py    # explorer katalog + filter model
 ├── test_model_explorer.py
-└── laporan_model.md     # template laporan yang kamu isi
+└── laporan_model.md     # laporan pemilihan model (sudah terisi)
 ```
 
 ## Alur
@@ -54,6 +57,23 @@ latihan_model/
 | Tradeoff | Menyebut kekurangan, bukan hanya kelebihan? |
 | Realistis | Harga/context yang dikutip masuk akal dan sumbernya jelas? |
 | Privasi | Skenario sensitif tidak asal pakai API publik? |
+
+## Hasil
+
+- Test: **7/7 lulus** (total repo: 19/19).
+- Katalog saat dijalankan: **457 model**; 255 kandidat dengan prompt ≤ $1/juta,
+  context ≥ 32k, dan dukungan `response_format`.
+- Pelajaran penting: filter metadata saja tidak cukup. Model audio dan
+  auto-router bisa lolos filter, jadi modality dan jenis model harus diperiksa.
+- Rekomendasi di laporan:
+  - **A (chatbot support):** `recursive/flint-v1.0:free` untuk prototipe;
+    `openai/gpt-oss-20b` untuk produksi (≈ $0.65/bulan pada 500 chat/hari).
+  - **B (kontrak hukum):** `z-ai/glm-5.2` hanya lewat provider zero-retention,
+    private cloud, atau self-hosted — bukan API publik biasa.
+  - **C (klinik offline):** Llama 3.2 3B Instruct Q4_K_M untuk 8 GB VRAM,
+    dengan JSON terbatas + validasi + review dokter.
+
+Laporan lengkap ada di [`laporan_model.md`](laporan_model.md).
 
 ## Catatan
 
