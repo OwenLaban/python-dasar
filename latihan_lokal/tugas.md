@@ -46,8 +46,9 @@ Aturan:
 | `qwen2.5:1.5b` | 986 MB | 32k | multilingual, termasuk Indonesia |
 | `gemma2:2b` | 1,6 GB | 8k | paling besar di kelompok ini |
 
-Ketiganya quantized default Ollama (sekitar Q4). Di laptop dengan 2 GB VRAM,
-`gemma2:2b` bisa sebagian berjalan di CPU.
+Ketiganya memakai quantization default Ollama, tetapi tidak sama:
+`llama3.2:1b` Q8_0, `qwen2.5:1.5b` Q4_K_M, dan `gemma2:2b` Q4_0. Di laptop
+dengan 2 GB VRAM, `gemma2:2b` sebagian besar berjalan di CPU.
 
 ## Yang dinilai
 

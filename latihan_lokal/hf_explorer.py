@@ -25,27 +25,29 @@ def ambil_model_hf(
     - sort: "downloads"
     - direction: -1 (paling banyak diunduh dulu)
     - filter: task, hanya jika task tidak None
-
-    TODO:
-    1. Susun dict params.
-    2. response = requests.get(HF_API, params=params, timeout=30)
-    3. response.raise_for_status()
-    4. return response.json()
     """
-    raise NotImplementedError("TODO: implementasikan ambil_model_hf()")
+    params = {
+        "search": search,
+        "limit": limit,
+        "sort": "downloads",
+        "direction": -1,
+    }
+    if task is not None:
+        params["filter"] = task
+
+    response = requests.get(HF_API, params=params, timeout=30)
+    response.raise_for_status()
+    return response.json()
 
 
 def ambil_detail_hf(model_id: str) -> dict:
     """Ambil detail satu model, termasuk jumlah parameter di `safetensors.total`.
 
     Endpoint: GET https://huggingface.co/api/models/{model_id}
-
-    TODO:
-    1. response = requests.get(f"{HF_API}/{model_id}", timeout=30)
-    2. response.raise_for_status()
-    3. return response.json()
     """
-    raise NotImplementedError("TODO: implementasikan ambil_detail_hf()")
+    response = requests.get(f"{HF_API}/{model_id}", timeout=30)
+    response.raise_for_status()
+    return response.json()
 
 
 def estimasi_q4_gb(model: dict) -> float | None:
@@ -57,13 +59,11 @@ def estimasi_q4_gb(model: dict) -> float | None:
     Jika `safetensors.total` tidak ada, kembalikan None.
     Endpoint list HF sering tidak menyertakan field ini; ambil detail model
     dulu dengan `ambil_detail_hf()`.
-
-    TODO:
-    1. total = model.get("safetensors", {}).get("total")
-    2. jika tidak ada, return None
-    3. return round(total * 0.55 / 1_000_000_000, 2)
     """
-    raise NotImplementedError("TODO: implementasikan estimasi_q4_gb()")
+    total = model.get("safetensors", {}).get("total")
+    if total is None:
+        return None
+    return round(total * 0.55 / 1_000_000_000, 2)
 
 
 def ringkas_model_hf(model: dict) -> dict:
@@ -81,10 +81,24 @@ def ringkas_model_hf(model: dict) -> dict:
         "params": model.get("safetensors", {}).get("total"),
         "q4_gb": estimasi_q4_gb(model),
     }
-
-    TODO: implementasikan.
     """
-    raise NotImplementedError("TODO: implementasikan ringkas_model_hf()")
+    license_tag = next(
+        (tag for tag in model.get("tags", []) if tag.startswith("license:")),
+        None,
+    )
+    license_name = license_tag.split(":", 1)[1] if license_tag else None
+
+    return {
+        "id": model["id"],
+        "downloads": model.get("downloads", 0),
+        "likes": model.get("likes", 0),
+        "task": model.get("pipeline_tag"),
+        "library": model.get("library_name"),
+        "license": license_name,
+        "gated": bool(model.get("gated", False)),
+        "params": model.get("safetensors", {}).get("total"),
+        "q4_gb": estimasi_q4_gb(model),
+    }
 
 
 def pilih_model_lokal(
@@ -99,10 +113,19 @@ def pilih_model_lokal(
     - lewati model `gated` (butuh login/izin);
     - estimasi Q4 harus ada dan <= max_vram_gb × margin;
     - urutkan dari downloads terbanyak.
-
-    TODO: implementasikan.
     """
-    raise NotImplementedError("TODO: implementasikan pilih_model_lokal()")
+    hasil = []
+    for model in models:
+        if model.get("pipeline_tag") != "text-generation":
+            continue
+        if model.get("gated", False):
+            continue
+        q4_gb = estimasi_q4_gb(model)
+        if q4_gb is None or q4_gb > max_vram_gb * margin:
+            continue
+        hasil.append(model)
+
+    return sorted(hasil, key=lambda m: m.get("downloads", 0), reverse=True)
 
 
 def main() -> None:
@@ -113,7 +136,11 @@ def main() -> None:
     print(f"{'MODEL':<52} {'DOWNLOADS':>12} {'Q4 (GB)':>8}")
     print("-" * 76)
     for model in models[:6]:
-        detail = ambil_detail_hf(model["id"])
+        try:
+            detail = ambil_detail_hf(model["id"])
+        except requests.RequestException as error:
+            print(f"{model['id']:<52} GAGAL: {error}")
+            continue
         detail.setdefault("downloads", model.get("downloads", 0))
         detail.setdefault("likes", model.get("likes", 0))
         detail.setdefault("pipeline_tag", model.get("pipeline_tag"))

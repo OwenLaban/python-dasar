@@ -1,0 +1,47 @@
+[
+  {
+    "model": "llama3.2:1b",
+    "latency_s": 19.64,
+    "token_per_detik": 17.44,
+    "valid_json": true,
+    "field_lengkap": true,
+    "output": {
+      "nama": "Rina",
+      "email": "rina@sinarjaya.co.id",
+      "topik": "Pesanan #4821 belum sampai",
+      "sentimen": "negatif",
+      "butuh_eskalasi": false
+    },
+    "raw": "{\n  \"nama\": \"Rina\",\n  \"email\": \"rina@sinarjaya.co.id\",\n  \"topik\": \"Pesanan #4821 belum sampai\",\n  \"sentimen\": \"negatif\",\n  \"butuh_eskalasi\": false\n}"
+  },
+  {
+    "model": "qwen2.5:1.5b",
+    "latency_s": 10.79,
+    "token_per_detik": 25.68,
+    "valid_json": true,
+    "field_lengkap": true,
+    "output": {
+      "nama": "Rina",
+      "email": "rina@sinarjaya.co.id",
+      "topik": "Pesanan tidak sampai",
+      "sentimen": "negatif",
+      "butuh_eskalasi": true
+    },
+    "raw": "{\n  \"nama\": \"Rina\",\n  \"email\": \"rina@sinarjaya.co.id\",\n  \"topik\": \"Pesanan tidak sampai\",\n  \"sentimen\": \"negatif\",\n  \"butuh_eskalasi\": true\n}"
+  },
+  {
+    "model": "gemma2:2b",
+    "latency_s": 16.64,
+    "token_per_detik": 10.87,
+    "valid_json": true,
+    "field_lengkap": true,
+    "output": {
+      "nama": "Rina",
+      "email": "rina@sinarjaya.co.id",
+      "topik": "Pesanan belum sampai",
+      "sentimen": "negatif",
+      "butuh_eskalasi": true
+    },
+    "raw": "{\n  \"nama\": \"Rina\",\n  \"email\": \"rina@sinarjaya.co.id\",\n  \"topik\": \"Pesanan belum sampai\",\n  \"sentimen\": \"negatif\",\n  \"butuh_eskalasi\": true\n}"
+  }
+]

@@ -1,6 +1,6 @@
 # 🐍 python-dasar
 
-Latihan Python, FastAPI, dasar LLM, prompt engineering, dan pemilihan model — Minggu 1–10 dari perjalanan belajar AI Engineer 24 minggu ([roadmap.sh/ai-engineer](https://roadmap.sh/ai-engineer)).
+Latihan Python, FastAPI, dasar LLM, prompt engineering, pemilihan model, dan model lokal — Minggu 1–11 dari perjalanan belajar AI Engineer 24 minggu ([roadmap.sh/ai-engineer](https://roadmap.sh/ai-engineer)).
 
 ## Isi Latihan
 
@@ -21,6 +21,7 @@ Latihan Python, FastAPI, dasar LLM, prompt engineering, dan pemilihan model — 
 | `latihan_llm/` | **Minggu 7:** tokenizer, token vs kata, context window |
 | `latihan_prompt/` | **Minggu 8:** 5 variasi prompt + evaluasi untuk ekstraksi email → JSON |
 | `latihan_model/` | **Minggu 10:** explorer katalog OpenRouter + laporan pemilihan model |
+| `latihan_lokal/` | **Minggu 11:** explorer Hugging Face + benchmark 3 model lokal (Ollama) |
 
 ## Cara Menjalankan
 
@@ -112,6 +113,29 @@ pytest latihan_model -v
 - Panduan: [`latihan_model/README.md`](latihan_model/README.md)
 - Laporan: [`latihan_model/laporan_model.md`](latihan_model/laporan_model.md)
 
+## Latihan Model Lokal (Minggu 11)
+
+Menjelajahi metadata model di Hugging Face Hub, lalu menjalankan tiga model
+open-weight lewat Ollama pada tugas ekstraksi email → JSON.
+
+```powershell
+ollama pull llama3.2:1b
+ollama pull qwen2.5:1.5b
+ollama pull gemma2:2b
+
+python -m latihan_lokal.hf_explorer
+python -m latihan_lokal.benchmark_ollama
+pytest latihan_lokal -v
+```
+
+Hasil benchmark (run kedua): `qwen2.5:1.5b` paling cepat dan akurat
+(10,79 s; 25,68 token/detik; 5/5 field benar), diikuti `gemma2:2b`
+(16,64 s; 10,87 token/detik) dan `llama3.2:1b` (19,64 s; 17,44 token/detik).
+`gemma2:2b` sebagian besar berjalan di CPU karena VRAM hanya 2 GB.
+
+- Panduan: [`latihan_lokal/README.md`](latihan_lokal/README.md)
+- Laporan: [`latihan_lokal/laporan_benchmark.md`](latihan_lokal/laporan_benchmark.md)
+
 ## Contoh Output — Proyek Kalkulator
 
 ```text
@@ -141,3 +165,4 @@ Hasil = 212.0
 - **HTTP & API:** method, status code, headers/body, `requests`, JSON (`loads`/`dumps`), environment variable dari `.env`
 - **LLM & prompt:** token ≠ kata, context window, temperature/top-p, prompt anatomy, few-shot/CoT, structured output
 - **Pemilihan model:** closed vs open-weight vs self-hosted, biaya per 1 juta token, context window vs throughput, tradeoff privasi dan operasional
+- **Model lokal:** Hugging Face Hub vs Ollama, parameter vs quantization vs VRAM, benchmark latency/throughput, batas hardware 2 GB VRAM
