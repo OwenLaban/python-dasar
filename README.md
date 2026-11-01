@@ -1,6 +1,6 @@
 # 🐍 python-dasar
 
-Latihan Python, FastAPI, dasar LLM, prompt engineering, pemilihan model, dan model lokal — Minggu 1–11 dari perjalanan belajar AI Engineer 24 minggu ([roadmap.sh/ai-engineer](https://roadmap.sh/ai-engineer)).
+Latihan Python, FastAPI, dasar LLM, prompt engineering, pemilihan model, model lokal, dan context engineering — Minggu 1–12 dari perjalanan belajar AI Engineer 24 minggu ([roadmap.sh/ai-engineer](https://roadmap.sh/ai-engineer)).
 
 ## Isi Latihan
 
@@ -22,6 +22,7 @@ Latihan Python, FastAPI, dasar LLM, prompt engineering, pemilihan model, dan mod
 | `latihan_prompt/` | **Minggu 8:** 5 variasi prompt + evaluasi untuk ekstraksi email → JSON |
 | `latihan_model/` | **Minggu 10:** explorer katalog OpenRouter + laporan pemilihan model |
 | `latihan_lokal/` | **Minggu 11:** explorer Hugging Face + benchmark 3 model lokal (Ollama) |
+| `latihan_context/` | **Minggu 12:** context engineering, compaction, dan eksperimen posisi informasi |
 
 ## Cara Menjalankan
 
@@ -136,6 +137,24 @@ Hasil benchmark (run kedua): `qwen2.5:1.5b` paling cepat dan akurat
 - Panduan: [`latihan_lokal/README.md`](latihan_lokal/README.md)
 - Laporan: [`latihan_lokal/laporan_benchmark.md`](latihan_lokal/laporan_benchmark.md)
 
+## Latihan Context Engineering (Minggu 12)
+
+Mengatur anggaran token, memotong konteks dengan overlap, memadatkan riwayat,
+dan menguji apakah posisi informasi memengaruhi jawaban model lokal.
+
+```powershell
+python -m latihan_context.eksperimen_konteks
+pytest latihan_context -v
+```
+
+Hasil: **20/20 test lulus**. Eksperimen `qwen2.5:1.5b` berhasil menemukan kode
+di akhir dokumen, tetapi menjawab `32` (dari filler “nomor 32”) di posisi awal
+dan tengah. Prompt 1.627 token masih muat di `num_ctx` 2.048, jadi kegagalan
+bukan karena overflow.
+
+- Panduan: [`latihan_context/README.md`](latihan_context/README.md)
+- Laporan: [`latihan_context/laporan_konteks.md`](latihan_context/laporan_konteks.md)
+
 ## Contoh Output — Proyek Kalkulator
 
 ```text
@@ -166,3 +185,4 @@ Hasil = 212.0
 - **LLM & prompt:** token ≠ kata, context window, temperature/top-p, prompt anatomy, few-shot/CoT, structured output
 - **Pemilihan model:** closed vs open-weight vs self-hosted, biaya per 1 juta token, context window vs throughput, tradeoff privasi dan operasional
 - **Model lokal:** Hugging Face Hub vs Ollama, parameter vs quantization vs VRAM, benchmark latency/throughput, batas hardware 2 GB VRAM
+- **Context engineering:** anggaran token, chunking + overlap, compaction riwayat, map-reduce/refine, failure modes (overflow, distraction, lost in the middle)

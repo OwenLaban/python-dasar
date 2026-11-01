@@ -105,6 +105,13 @@ def test_gabung_ringkasan_memotong():
     assert konteks.hitung_token(hasil) <= 5
 
 
+def test_gabung_ringkasan_newline_tidak_melebihi_batas():
+    hasil = konteks.gabung_ringkasan(["aa", "bb", "cc"], max_token=3)
+
+    assert hasil
+    assert konteks.hitung_token(hasil) <= 3
+
+
 def test_gabung_ringkasan_kosong():
     assert konteks.gabung_ringkasan([], max_token=10) == ""
 

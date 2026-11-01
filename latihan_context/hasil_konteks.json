@@ -1,0 +1,26 @@
+[
+  {
+    "posisi": "awal",
+    "token_dokumen": 1575,
+    "token_prompt": 1627,
+    "jawaban": "32",
+    "benar": false,
+    "latency_s": 12.9
+  },
+  {
+    "posisi": "tengah",
+    "token_dokumen": 1575,
+    "token_prompt": 1627,
+    "jawaban": "32",
+    "benar": false,
+    "latency_s": 2.46
+  },
+  {
+    "posisi": "akhir",
+    "token_dokumen": 1575,
+    "token_prompt": 1627,
+    "jawaban": "BIRU-4721",
+    "benar": true,
+    "latency_s": 5.78
+  }
+]

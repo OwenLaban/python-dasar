@@ -1,6 +1,6 @@
 # Lab Minggu 12 — Context Engineering
 
-Status: 🚧 sedang dikerjakan
+Status: ✅ selesai (31/10/2026)
 
 Tujuan: memahami bahwa kualitas jawaban LLM tidak hanya ditentukan oleh prompt,
 tetapi juga oleh **informasi apa yang dimasukkan ke context window**, berapa
@@ -13,13 +13,13 @@ ke model, lalu memakai konsep itu untuk proyek summarizer dokumen.
 
 ```text
 latihan_context/
-├── README.md              # instruksi ini
+├── README.md              # instruksi dan hasil
 ├── materi.md              # konsep context engineering + failure modes
-├── konteks.py             # 6 fungsi TODO
+├── konteks.py             # 6 fungsi (selesai)
 ├── test_konteks.py
-├── eksperimen_konteks.py  # eksperimen lost-in-the-middle (sudah jadi)
-├── laporan_konteks.md     # laporan yang kamu isi
-└── hasil_konteks.json     # hasil mentah (dibuat setelah eksperimen)
+├── eksperimen_konteks.py  # eksperimen lost-in-the-middle
+├── laporan_konteks.md     # laporan hasil
+└── hasil_konteks.json     # hasil mentah eksperimen
 ```
 
 ## Alur
@@ -52,6 +52,21 @@ latihan_context/
 | 6 | Implementasikan `gabung_ringkasan()` | test lulus |
 | 7 | Jalankan eksperimen 3 posisi | `hasil_konteks.json` |
 | 8 | Isi laporan analisis | `laporan_konteks.md` |
+
+## Hasil
+
+- Test: **20/20 lulus** di `latihan_context`; total repo **51/51**.
+- Eksperimen `qwen2.5:1.5b`:
+  - awal → `32` (salah),
+  - tengah → `32` (salah),
+  - akhir → `BIRU-4721` (benar).
+- Prompt 1.627 token, masih di bawah `num_ctx` 2.048 — jadi kegagalan bukan
+  karena overflow.
+- Pelajaran: `32` terambil dari filler “nomor 32”; model bisa terpancing pola
+  dan gagal mengikuti format. Satu run belum cukup untuk menyimpulkan
+  *lost in the middle* karena posisi awal juga gagal.
+
+Laporan lengkap ada di [`laporan_konteks.md`](laporan_konteks.md).
 
 ## Rubrik
 

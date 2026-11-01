@@ -10,14 +10,10 @@ ENCODING = "o200k_base"
 
 
 def hitung_token(teks: str, encoding: str = ENCODING) -> int:
-    """Kembalikan jumlah token dari sebuah teks.
-
-    TODO:
-    1. Ambil encoder dengan ``tiktoken.get_encoding(encoding)``.
-    2. Encode ``teks``.
-    3. Kembalikan panjang hasil encode.
-    """
-    raise NotImplementedError("TODO: implementasikan hitung_token()")
+    """Kembalikan jumlah token dari sebuah teks."""
+    encoder = tiktoken.get_encoding(encoding)
+    encoded = encoder.encode(teks)
+    return len(encoded)
 
 
 def potong_token(
@@ -38,10 +34,27 @@ def potong_token(
 
     Petunjuk: encode seluruh teks lebih dulu, lalu potong daftar token ID.
     Setelah itu decode setiap potongan kembali menjadi string.
-
-    TODO: implementasikan validasi dan pemotongan.
     """
-    raise NotImplementedError("TODO: implementasikan potong_token()")
+    if max_token <= 0:
+        raise ValueError("max_token harus > 0")
+    if overlap < 0 or overlap >= max_token:
+        raise ValueError("overlap harus >= 0 dan < max_token")
+    if not teks:
+        return []
+
+    encoder = tiktoken.get_encoding(encoding)
+    token_ids = encoder.encode(teks)
+
+    potongan = []
+    start = 0
+    while start < len(token_ids):
+        end = min(start + max_token, len(token_ids))
+        potongan_ids = token_ids[start:end]
+        potongan_teks = encoder.decode(potongan_ids)
+        potongan.append(potongan_teks)
+        start += max_token - overlap
+
+    return potongan
 
 
 def anggaran_input(
@@ -53,10 +66,11 @@ def anggaran_input(
 
     Rumus: ``batas_konteks - token_output - token_sistem``.
     Jika hasilnya <= 0, raise ``ValueError`` karena tidak ada ruang untuk input.
-
-    TODO: implementasikan.
     """
-    raise NotImplementedError("TODO: implementasikan anggaran_input()")
+    sisa = batas_konteks - token_output - token_sistem
+    if sisa <= 0:
+        raise ValueError("Tidak ada ruang untuk input: anggaran <= 0")
+    return sisa
 
 
 def pilih_strategi(jumlah_token: int, batas_input: int) -> str:
@@ -65,9 +79,11 @@ def pilih_strategi(jumlah_token: int, batas_input: int) -> str:
     - ``"stuff"`` jika seluruh teks muat dalam ``batas_input``.
     - ``"map_reduce"`` jika tidak muat.
 
-    TODO: implementasikan. Raise ``ValueError`` jika ``batas_input`` <= 0.
+    Raise ``ValueError`` jika ``batas_input`` <= 0.
     """
-    raise NotImplementedError("TODO: implementasikan pilih_strategi()")
+    if batas_input <= 0:
+        raise ValueError("batas_input harus > 0")
+    return "stuff" if jumlah_token <= batas_input else "map_reduce"
 
 
 def pangkas_riwayat(
@@ -85,9 +101,32 @@ def pangkas_riwayat(
     Ini adalah bentuk sederhana **compaction**: model tidak perlu melihat
     seluruh riwayat jika anggaran token sudah habis.
 
-    TODO: implementasikan. Raise ``ValueError`` jika ``max_token`` <= 0.
+    Raise ``ValueError`` jika ``max_token`` <= 0.
     """
-    raise NotImplementedError("TODO: implementasikan pangkas_riwayat()")
+    if max_token <= 0:
+        raise ValueError("max_token harus > 0")
+
+    encoder = tiktoken.get_encoding(encoding)
+    sisa_token = max_token
+    pesan_terpangkas = []
+
+    for item in reversed(pesan):
+        if sisa_token <= 0:
+            break
+        content = item.get("content", "")
+        token_count = len(encoder.encode(content))
+
+        if token_count <= sisa_token:
+            pesan_terpangkas.append(item)
+            sisa_token -= token_count
+        else:
+            # Potong konten sesuai sisa token
+            potongan_ids = encoder.encode(content)[:sisa_token]
+            potongan_content = encoder.decode(potongan_ids)
+            pesan_terpangkas.append({**item, "content": potongan_content})
+            break
+
+    return list(reversed(pesan_terpangkas))
 
 
 def gabung_ringkasan(
@@ -98,11 +137,24 @@ def gabung_ringkasan(
     """Gabungkan beberapa ringkasan menjadi satu, dengan batas token.
 
     Ringkasan digabung dengan newline. Jika ringkasan berikutnya tidak muat,
-    potong bagian itu sesuai sisa anggaran lalu berhenti.
-
-    TODO: implementasikan. Raise ``ValueError`` jika ``max_token`` <= 0.
+    potong bagian itu sesuai sisa anggaran lalu berhenti. Token newline ikut
+    dihitung agar hasil tidak melewati ``max_token``.
     """
-    raise NotImplementedError("TODO: implementasikan gabung_ringkasan()")
+    if max_token <= 0:
+        raise ValueError("max_token harus > 0")
+
+    hasil = ""
+    for bagian in ringkasan:
+        calon = f"{hasil}\n{bagian}" if hasil else bagian
+
+        if hitung_token(calon, encoding) <= max_token:
+            hasil = calon
+        else:
+            potongan = potong_token(calon, max_token, encoding=encoding)
+            hasil = potongan[0] if potongan else ""
+            break
+
+    return hasil
 
 
 def main() -> None:
