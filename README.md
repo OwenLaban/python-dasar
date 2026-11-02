@@ -1,6 +1,6 @@
 # 🐍 python-dasar
 
-Latihan Python, FastAPI, dasar LLM, prompt engineering, pemilihan model, model lokal, dan context engineering — Minggu 1–12 dari perjalanan belajar AI Engineer 24 minggu ([roadmap.sh/ai-engineer](https://roadmap.sh/ai-engineer)).
+Latihan Python, FastAPI, dasar LLM, prompt engineering, pemilihan model, model lokal, context engineering, dan embeddings — Minggu 1–13 dari perjalanan belajar AI Engineer 24 minggu ([roadmap.sh/ai-engineer](https://roadmap.sh/ai-engineer)).
 
 ## Isi Latihan
 
@@ -23,6 +23,7 @@ Latihan Python, FastAPI, dasar LLM, prompt engineering, pemilihan model, model l
 | `latihan_model/` | **Minggu 10:** explorer katalog OpenRouter + laporan pemilihan model |
 | `latihan_lokal/` | **Minggu 11:** explorer Hugging Face + benchmark 3 model lokal (Ollama) |
 | `latihan_context/` | **Minggu 12:** context engineering, compaction, dan eksperimen posisi informasi |
+| `latihan_embedding/` | **Minggu 13:** cosine similarity, semantic search, dan evaluasi precision@k |
 
 ## Cara Menjalankan
 
@@ -155,6 +156,29 @@ bukan karena overflow.
 - Panduan: [`latihan_context/README.md`](latihan_context/README.md)
 - Laporan: [`latihan_context/laporan_konteks.md`](latihan_context/laporan_konteks.md)
 
+## Latihan Embeddings (Minggu 13)
+
+Mengubah teks menjadi vektor 768 dimensi dengan `nomic-embed-text` lewat
+Ollama, menghitung cosine similarity secara manual, lalu memakai vektor untuk
+semantic search 20 kalimat dari 4 topik.
+
+```powershell
+ollama pull nomic-embed-text
+python -m latihan_embedding.eksperimen_embedding
+python -m latihan_embedding.uji_bahasa
+pytest latihan_embedding -v
+```
+
+Hasil: **20/20 test lulus**. precision@3 adalah 1,00 (teknologi), 0,33
+(kuliner), 0,67 (olahraga), dan 0,00 (keuangan). Query keuangan yang gagal
+dalam bahasa Indonesia naik menjadi 0,67 setelah diterjemahkan ke bahasa
+Inggris — `nomic-embed-text` lebih kuat pada bahasa Inggris. Skor cosine juga
+tidak terkalibrasi: hasil salah bisa mendapat 0,7363, lebih tinggi dari hasil
+benar 0,7129.
+
+- Panduan: [`latihan_embedding/README.md`](latihan_embedding/README.md)
+- Laporan: [`latihan_embedding/laporan_embedding.md`](latihan_embedding/laporan_embedding.md)
+
 ## Contoh Output — Proyek Kalkulator
 
 ```text
@@ -186,3 +210,4 @@ Hasil = 212.0
 - **Pemilihan model:** closed vs open-weight vs self-hosted, biaya per 1 juta token, context window vs throughput, tradeoff privasi dan operasional
 - **Model lokal:** Hugging Face Hub vs Ollama, parameter vs quantization vs VRAM, benchmark latency/throughput, batas hardware 2 GB VRAM
 - **Context engineering:** anggaran token, chunking + overlap, compaction riwayat, map-reduce/refine, failure modes (overflow, distraction, lost in the middle)
+- **Embeddings:** representasi makna sebagai vektor, dot product, norm, cosine similarity, normalisasi, semantic search, precision@k, keterbatasan model bahasa dan skor yang tidak terkalibrasi
