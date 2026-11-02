@@ -1,0 +1,96 @@
+{
+  "model": "nomic-embed-text",
+  "dimensi": 768,
+  "jumlah_kalimat": 20,
+  "waktu_embed_s": 9.12,
+  "hasil": [
+    {
+      "query": "bagaimana memulai karier sebagai programmer",
+      "topik_target": "teknologi",
+      "precision_at_k": 1.0,
+      "top_k": [
+        {
+          "teks": "Python adalah bahasa pemrograman yang populer untuk membangun aplikasi web.",
+          "topik": "teknologi",
+          "skor": 0.7129
+        },
+        {
+          "teks": "API memungkinkan dua program saling bertukar data.",
+          "topik": "teknologi",
+          "skor": 0.7081
+        },
+        {
+          "teks": "Docker membantu mengemas aplikasi agar berjalan sama di berbagai komputer.",
+          "topik": "teknologi",
+          "skor": 0.6701
+        }
+      ]
+    },
+    {
+      "query": "makanan hangat berkuah untuk makan siang",
+      "topik_target": "kuliner",
+      "precision_at_k": 0.3333,
+      "top_k": [
+        {
+          "teks": "Bakso disajikan dengan kuah kaldu hangat dan mie kuning.",
+          "topik": "kuliner",
+          "skor": 0.7472
+        },
+        {
+          "teks": "Anggaran bulanan membantu mengendalikan pengeluaran rumah tangga.",
+          "topik": "keuangan",
+          "skor": 0.6555
+        },
+        {
+          "teks": "Asuransi kesehatan membantu menutup biaya pengobatan yang mahal.",
+          "topik": "keuangan",
+          "skor": 0.6439
+        }
+      ]
+    },
+    {
+      "query": "olahraga ringan yang aman untuk pemula",
+      "topik_target": "olahraga",
+      "precision_at_k": 0.6667,
+      "top_k": [
+        {
+          "teks": "Pemanasan sebelum olahraga mengurangi risiko cedera otot.",
+          "topik": "olahraga",
+          "skor": 0.7212
+        },
+        {
+          "teks": "Renang melatih hampir seluruh otot tubuh tanpa membebani sendi.",
+          "topik": "olahraga",
+          "skor": 0.6639
+        },
+        {
+          "teks": "Asuransi kesehatan membantu menutup biaya pengobatan yang mahal.",
+          "topik": "keuangan",
+          "skor": 0.6635
+        }
+      ]
+    },
+    {
+      "query": "cara mengelola uang agar tidak cepat habis",
+      "topik_target": "keuangan",
+      "precision_at_k": 0.0,
+      "top_k": [
+        {
+          "teks": "Docker membantu mengemas aplikasi agar berjalan sama di berbagai komputer.",
+          "topik": "teknologi",
+          "skor": 0.7363
+        },
+        {
+          "teks": "Pemanasan sebelum olahraga mengurangi risiko cedera otot.",
+          "topik": "olahraga",
+          "skor": 0.7016
+        },
+        {
+          "teks": "Tim sepak bola itu menang melalui gol di menit akhir.",
+          "topik": "olahraga",
+          "skor": 0.6981
+        }
+      ]
+    }
+  ]
+}

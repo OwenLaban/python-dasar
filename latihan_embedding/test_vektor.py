@@ -113,3 +113,9 @@ def test_precision_at_k():
 
 def test_precision_at_k_kosong():
     assert vektor.precision_at_k([], "teknologi") == 0.0
+
+
+@pytest.mark.parametrize("k", [0, -1])
+def test_precision_at_k_k_invalid(k):
+    with pytest.raises(ValueError):
+        vektor.precision_at_k([{"topik": "teknologi"}], "teknologi", k=k)

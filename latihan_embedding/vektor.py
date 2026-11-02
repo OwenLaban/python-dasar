@@ -15,7 +15,9 @@ def dot_product(a: list[float], b: list[float]) -> float:
     1. Pastikan panjang ``a`` dan ``b`` sama; jika tidak, raise ``ValueError``.
     2. Kalikan elemen pada posisi yang sama, lalu jumlahkan.
     """
-    raise NotImplementedError("TODO: implementasikan dot_product()")
+    if len(a) != len(b):
+        raise ValueError("Panjang vektor harus sama")
+    return sum(x * y for x, y in zip(a, b))
 
 
 def norm(v: list[float]) -> float:
@@ -24,7 +26,7 @@ def norm(v: list[float]) -> float:
     Rumus: ``sqrt(x1**2 + x2**2 + ... + xn**2)``.
     Vektor kosong memiliki norm 0.0.
     """
-    raise NotImplementedError("TODO: implementasikan norm()")
+    return math.hypot(*v)
 
 
 def cosine_similarity(a: list[float], b: list[float]) -> float:
@@ -37,7 +39,13 @@ def cosine_similarity(a: list[float], b: list[float]) -> float:
     2. Hitung ``dot_product(a, b) / (norm(a) * norm(b))``.
     3. Raise ``ValueError`` jika salah satu vektor nol (tidak punya arah).
     """
-    raise NotImplementedError("TODO: implementasikan cosine_similarity()")
+    if len(a) != len(b):
+        raise ValueError("Panjang vektor harus sama")
+    norm_a = norm(a)
+    norm_b = norm(b)
+    if norm_a == 0 or norm_b == 0:
+        raise ValueError("Vektor nol tidak memiliki arah")
+    return dot_product(a, b) / (norm_a * norm_b)
 
 
 def normalisasi(v: list[float]) -> list[float]:
@@ -46,7 +54,10 @@ def normalisasi(v: list[float]) -> list[float]:
     TODO: bagi setiap elemen dengan ``norm(v)``. Raise ``ValueError`` jika
     vektor nol, karena pembagian dengan nol tidak terdefinisi.
     """
-    raise NotImplementedError("TODO: implementasikan normalisasi()")
+    n = norm(v)
+    if n == 0:
+        raise ValueError("Vektor nol tidak dapat dinormalisasi")
+    return [x / n for x in v]
 
 
 def cari_terdekat(
@@ -66,7 +77,14 @@ def cari_terdekat(
     3. Urutkan menurun, ambil ``k`` teratas.
     4. Jangan mengubah list kandidat asli.
     """
-    raise NotImplementedError("TODO: implementasikan cari_terdekat()")
+    if k <= 0:
+        raise ValueError("k harus > 0")
+    hasil = []
+    for item in kandidat:
+        skor = cosine_similarity(query_vec, item["vektor"])
+        hasil.append({"teks": item["teks"], "topik": item["topik"], "skor": skor})
+    hasil.sort(key=lambda x: x["skor"], reverse=True)
+    return hasil[:k]
 
 
 def precision_at_k(hasil: list[dict], topik: str, k: int | None = None) -> float:
@@ -74,6 +92,15 @@ def precision_at_k(hasil: list[dict], topik: str, k: int | None = None) -> float
 
     Contoh: 2 dari 3 hasil teratas bertopik ``"teknologi"`` → 0.666...
     Jika ``k`` tidak diberikan, pakai seluruh hasil. Jika tidak ada hasil,
-    kembalikan 0.0.
+    kembalikan 0.0. Jika ``k`` diberikan, nilainya harus lebih besar dari 0.
     """
-    raise NotImplementedError("TODO: implementasikan precision_at_k()")
+    if k is not None and k <= 0:
+        raise ValueError("k harus > 0")
+    if not hasil:
+        return 0.0
+    if k is None:
+        k = len(hasil)
+    else:
+        k = min(k, len(hasil))
+    relevan = sum(1 for item in hasil[:k] if item["topik"] == topik)
+    return relevan / k

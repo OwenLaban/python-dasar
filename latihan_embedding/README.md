@@ -1,6 +1,6 @@
 # Lab Minggu 13 — Embeddings
 
-Status: 🚧 sedang dikerjakan
+Status: ✅ selesai (02/11/2026)
 
 Tujuan: memahami bahwa **makna teks bisa direpresentasikan sebagai vektor**,
 lalu memakai kedekatan vektor untuk mencari kalimat yang relevan secara
@@ -15,13 +15,14 @@ representasi makna yang nanti menjadi dasar RAG di Minggu 15–16.
 latihan_embedding/
 ├── README.md                 # instruksi ini
 ├── materi.md                 # konsep embedding + cosine similarity
-├── vektor.py                 # 6 fungsi TODO
+├── vektor.py                 # 6 fungsi vektor + evaluasi
 ├── test_vektor.py            # test tanpa model/jaringan
-├── klien_embedding.py        # klien Ollama (sudah jadi)
+├── klien_embedding.py        # klien Ollama
 ├── kalimat.py                # 20 kalimat + 4 query
 ├── eksperimen_embedding.py   # script semantic search
-├── laporan_embedding.md      # laporan yang kamu isi
-└── hasil_embedding.json      # hasil mentah (dibuat setelah eksperimen)
+├── uji_bahasa.py             # uji pengaruh bahasa query
+├── laporan_embedding.md      # laporan hasil
+└── hasil_embedding.json      # hasil mentah eksperimen
 ```
 
 ## Model
@@ -59,7 +60,13 @@ Kalau ingin membandingkan, kamu bisa mencoba model embedding lain lewat
    ```
 
 4. Isi `laporan_embedding.md` berdasarkan hasil nyata.
-5. Commit hasilnya.
+5. Jalankan uji tambahan pengaruh bahasa query:
+
+   ```powershell
+   .\.venv\Scripts\python.exe -m latihan_embedding.uji_bahasa
+   ```
+
+6. Commit hasilnya.
 
 ## Tugas
 
@@ -73,6 +80,19 @@ Kalau ingin membandingkan, kamu bisa mencoba model embedding lain lewat
 | 6 | Implementasikan `precision_at_k()` | test lulus |
 | 7 | Jalankan semantic search 20 kalimat | `hasil_embedding.json` |
 | 8 | Isi laporan analisis | `laporan_embedding.md` |
+| 9 | Uji pengaruh bahasa query | `uji_bahasa.py` |
+
+## Hasil
+
+- **20/20 test lulus** untuk 6 fungsi vektor dan validasi `k`.
+- precision@3: query 1 = **1,00**; query 2 = **0,33**; query 3 = **0,67**;
+  query 4 = **0,00**.
+- Query keuangan gagal dalam bahasa Indonesia (0,00), tetapi naik menjadi
+  **0,67** setelah diterjemahkan ke bahasa Inggris.
+- Skor cosine tidak bisa dibandingkan antar-query: hasil salah (0,7363) bisa
+  lebih tinggi daripada hasil benar (0,7129).
+
+Detail ada di `laporan_embedding.md` dan `hasil_embedding.json`.
 
 ## Cara Menilai Hasil
 
