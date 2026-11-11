@@ -13,3 +13,6 @@ tugas.json
 
 # Konfigurasi lokal (bisa berisi secret)
 .env
+
+# Folder data vector database
+latihan_vectordb/.chroma/

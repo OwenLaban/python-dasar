@@ -5,3 +5,4 @@ uvicorn>=0.30
 pytest>=8.0
 httpx2>=2.16
 tiktoken>=0.7
+chromadb>=1.5
